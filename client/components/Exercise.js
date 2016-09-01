@@ -82,7 +82,7 @@ export default class Exercise extends React.Component {
             <form>
               <div className="form-group">
                 <label htmlFor="type">Exercise Type</label>
-                <select className="form-control" ref="type" value={type}>
+                <select className="form-control" ref="type">
                   <option value=""> Select </option>
                   <option value="BIKE"> BIKE </option>
                   <option value="LIFT"> LIFT </option>
@@ -93,17 +93,17 @@ export default class Exercise extends React.Component {
 
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
-                <input ref="quantity" type="text" className="form-control" id="quantity" value={quantity} />
+                <input ref="quantity" type="text" className="form-control" id="quantity" />
               </div>
 
               <div className="form-group">
                 <label htmlFor="calories">Calories</label>
-                <input ref="calories" type="text" className="form-control" id="calories" value={calories} />
+                <input ref="calories" type="text" className="form-control" id="calories" />
               </div>
 
               <div className="form-group">
                 <label htmlFor="duration">Duration</label>
-                <input ref="duration" type="text" className="form-control" id="duration" value={duration} />
+                <input ref="duration" type="text" className="form-control" id="duration" />
               </div>
 
               <button onClick={this.create} type="submit" className="btn btn-default">Create</button>
