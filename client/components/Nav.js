@@ -14,7 +14,6 @@ export default class Nav extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('Nav bar updating');
     this.refresh();
   }
 
@@ -31,6 +30,7 @@ export default class Nav extends React.Component {
     let profileButton = '';
     let logoutButton = '';
     let displayedUserName = '';
+    let admin = '';
 
     if (this.state.authorization) {
       profileButton = (<li><Link to="/profile"><i className="fa fa-key fa-heartbeat" /> Profile</Link></li>);
@@ -38,6 +38,10 @@ export default class Nav extends React.Component {
       registerButton = '';
       loginButton = '';
       displayedUserName = (<li>Logged In As: {jwtDecode(this.state.authorization).sub}</li>);
+      const adminRoles = jwtDecode(this.state.authorization).roles.filter((r) => r.role === 'ADMIN');
+      if (adminRoles.length > 0) {
+        admin = (<li><Link to="/Admin"><i className="fa fa-question-circle-o fa-fw" /> Admin</Link></li>);
+      }
     }
 
     return (
@@ -62,6 +66,7 @@ export default class Nav extends React.Component {
               {registerButton}
               {loginButton}
               {profileButton}
+              {admin}
               {logoutButton}
               {displayedUserName}
             </ul>
