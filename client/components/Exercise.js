@@ -55,12 +55,23 @@ export default class Exercise extends React.Component {
     axios.get(`http://localhost:9001/api/exercises/${id}`,
         { headers: { authorization: this.state.authorization } })
     .then(res => {
-      console.log('Response:', res.data);
-      // this.setState({ exercises: res.data });
+      console.log(res.data);
+      this.setState({ selected: res.data });
     });
   }
 
   render() {
+    let type = '';
+    let quantity = '';
+    let calories = '';
+    let duration = '';
+    if (this.state.selected) {
+      type = this.state.selected.type;
+      quantity = this.state.selected.quantity;
+      calories = this.state.selected.calories;
+      duration = this.state.selected.duration;
+    }
+
     return (
       <div>
 
@@ -71,7 +82,7 @@ export default class Exercise extends React.Component {
             <form>
               <div className="form-group">
                 <label htmlFor="type">Exercise Type</label>
-                <select className="form-control" ref="type">
+                <select className="form-control" ref="type" value={type}>
                   <option value=""> Select </option>
                   <option value="BIKE"> BIKE </option>
                   <option value="LIFT"> LIFT </option>
@@ -82,17 +93,17 @@ export default class Exercise extends React.Component {
 
               <div className="form-group">
                 <label htmlFor="quantity">Quantity</label>
-                <input ref="quantity" type="text" className="form-control" id="quantity" />
+                <input ref="quantity" type="text" className="form-control" id="quantity" value={quantity} />
               </div>
 
               <div className="form-group">
                 <label htmlFor="calories">Calories</label>
-                <input ref="calories" type="text" className="form-control" id="calories" />
+                <input ref="calories" type="text" className="form-control" id="calories" value={calories} />
               </div>
 
               <div className="form-group">
                 <label htmlFor="duration">Duration</label>
-                <input ref="duration" type="text" className="form-control" id="duration" />
+                <input ref="duration" type="text" className="form-control" id="duration" value={duration} />
               </div>
 
               <button onClick={this.create} type="submit" className="btn btn-default">Create</button>
@@ -116,7 +127,8 @@ export default class Exercise extends React.Component {
                   <tr key={ex.id}>
                     <td><a onClick={this.grab} data-tag={ex.id}><i data-tag={ex.id} className="fa fa-pencil-square-o" /></a>
                     </td>
-                    <td>{ex.id}<i className="fa fa-key fa-trash" /></td>
+                    <td><a onClick={this.delete} data-tag={ex.id}><i className="fa fa-key fa-trash" /></a>
+                    </td>
                     <td>{ex.type}</td>
                     <td>{ex.quantity}</td>
                     <td>{ex.calories}</td>
