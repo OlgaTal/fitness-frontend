@@ -30,6 +30,7 @@ export default class Nav extends React.Component {
     let loginButton = (<li><Link to="/login"><i className="fa fa-key fa-lock" /> Login</Link></li>);
     let profileButton = '';
     let logoutButton = '';
+    let exerciseButton = '';
     let displayedUserName = '';
 
     if (this.state.authorization) {
@@ -37,6 +38,7 @@ export default class Nav extends React.Component {
       logoutButton = (<li><Link to="/logout"><i className="fa fa-key fa-unlock" /> Logout</Link></li>);
       registerButton = '';
       loginButton = '';
+      exerciseButton = (<li><Link to="/exercise"><i className="fa fa-star" /> Exercise</Link></li>);
       displayedUserName = (<li>Logged In As: {jwtDecode(this.state.authorization).sub}</li>);
     }
 
@@ -62,6 +64,7 @@ export default class Nav extends React.Component {
               {registerButton}
               {loginButton}
               {profileButton}
+              {exerciseButton}
               {logoutButton}
               {displayedUserName}
             </ul>

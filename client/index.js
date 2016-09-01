@@ -9,6 +9,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Profile from './components/Profile';
+import Exercise from './components/Exercise';
 
 import React from 'react';
 import { render } from 'react-dom';
@@ -24,6 +25,7 @@ render(
       <Route path="login" component={Login} />
       <Route path="logout" component={Logout} />
       <Route path="profile" component={Profile} />
+      <Route path="exercise" component={Exercise} />
     </Route>
   </Router>
   , document.getElementById('root'));

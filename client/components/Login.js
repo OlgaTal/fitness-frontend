@@ -45,7 +45,7 @@ export default class Login extends React.Component {
                 <input ref="password" type="password" className="form-control" id="password" />
               </div>
 
-              <button onClick={this.create} type="submit" className="btn btn-default">Create</button>
+              <button onClick={this.create} type="submit" className="btn btn-default">Login</button>
             </form>
           </div>
           <div className="col-xs-9">

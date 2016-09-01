@@ -4,7 +4,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export default class Register extends React.Component {
+export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     const authorization = localStorage.getItem('token');
