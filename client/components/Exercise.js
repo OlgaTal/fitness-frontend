@@ -13,6 +13,8 @@ export default class Exercise extends React.Component {
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.grab = this.grab.bind(this);
+    this.clear = this.clear.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   componentDidMount() {
@@ -40,38 +42,51 @@ export default class Exercise extends React.Component {
 
   update(e) {
     e.preventDefault();
+    const id = this.refs.id.value;
     const type = this.refs.type.value;
     const quantity = this.refs.quantity.value;
     const calories = this.refs.calories.value;
     const duration = this.refs.duration.value;
-    axios.put('http://localhost:9001/api/exercises', { type, quantity, calories, duration }, { headers: { authorization: this.state.authorization } })
+    if (id) {
+      axios.put('http://localhost:9001/api/exercises', { id, type, quantity, calories, duration }, { headers: { authorization: this.state.authorization } })
+      .then(() => {
+        this.refresh();
+      });
+    }
+  }
+
+  clear(e) {
+    e.preventDefault();
+    this.refs.id.value = '';
+    this.refs.type.value = '';
+    this.refs.quantity.value = '';
+    this.refs.calories.value = '';
+    this.refs.duration.value = '';
+  }
+
+  grab(e) {
+    const id = e.target.attributes.getNamedItem('data-id').value;
+    axios.get(`http://localhost:9001/api/exercises/${id}`,
+        { headers: { authorization: this.state.authorization } })
+    .then(res => {
+      this.refs.id.value = res.data.id;
+      this.refs.type.value = res.data.type;
+      this.refs.quantity.value = res.data.quantity;
+      this.refs.calories.value = res.data.calories;
+      this.refs.duration.value = res.data.duration;
+    });
+  }
+
+  delete(e) {
+    const id = e.target.attributes.getNamedItem('data-id').value;
+    axios.delete(`http://localhost:9001/api/exercises/${id}`,
+        { headers: { authorization: this.state.authorization } })
     .then(() => {
       this.refresh();
     });
   }
 
-  grab(e) {
-    const id = e.target.attributes.getNamedItem('data-tag').value;
-    axios.get(`http://localhost:9001/api/exercises/${id}`,
-        { headers: { authorization: this.state.authorization } })
-    .then(res => {
-      console.log(res.data);
-      this.setState({ selected: res.data });
-    });
-  }
-
   render() {
-    let type = '';
-    let quantity = '';
-    let calories = '';
-    let duration = '';
-    if (this.state.selected) {
-      type = this.state.selected.type;
-      quantity = this.state.selected.quantity;
-      calories = this.state.selected.calories;
-      duration = this.state.selected.duration;
-    }
-
     return (
       <div>
 
@@ -80,6 +95,7 @@ export default class Exercise extends React.Component {
         <div className="row">
           <div className="col-xs-3">
             <form>
+              <input ref="id" type="hidden" id="id" />
               <div className="form-group">
                 <label htmlFor="type">Exercise Type</label>
                 <select className="form-control" ref="type">
@@ -106,6 +122,8 @@ export default class Exercise extends React.Component {
                 <input ref="duration" type="text" className="form-control" id="duration" />
               </div>
 
+              <button onClick={this.clear} type="submit" className="btn btn-default">Clear</button>
+              <button onClick={this.update} type="submit" className="btn btn-default">Update</button>
               <button onClick={this.create} type="submit" className="btn btn-default">Create</button>
             </form>
           </div>
@@ -125,9 +143,9 @@ export default class Exercise extends React.Component {
               <tbody>
                 {this.state.exercises.map(ex =>
                   <tr key={ex.id}>
-                    <td><a onClick={this.grab} data-tag={ex.id}><i data-tag={ex.id} className="fa fa-pencil-square-o" /></a>
+                    <td><a onClick={this.grab}><i data-id={ex.id} className="fa fa-pencil-square-o" /></a>
                     </td>
-                    <td><a onClick={this.delete} data-tag={ex.id}><i className="fa fa-key fa-trash" /></a>
+                    <td><a onClick={this.delete}><i data-id={ex.id} className="fa fa-key fa-trash" /></a>
                     </td>
                     <td>{ex.type}</td>
                     <td>{ex.quantity}</td>
