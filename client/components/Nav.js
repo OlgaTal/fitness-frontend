@@ -28,6 +28,7 @@ export default class Nav extends React.Component {
     let registerButton = (<li><Link to="/register"><i className="fa fa-user fa-fw" /> Register</Link></li>);
     let loginButton = (<li><Link to="/login"><i className="fa fa-key fa-lock" /> Login</Link></li>);
     let profileButton = '';
+    let deviceButton = '';
     let logoutButton = '';
     let exerciseButton = '';
     let displayedUserName = '';
@@ -35,6 +36,7 @@ export default class Nav extends React.Component {
 
     if (this.state.authorization) {
       profileButton = (<li><Link to="/profile"><i className="fa fa-key fa-heartbeat" /> Profile</Link></li>);
+      deviceButton = (<li><Link to="/device"><i className="fa fa-key fa-heartbeat" /> Device</Link></li>);
       logoutButton = (<li><Link to="/logout"><i className="fa fa-key fa-unlock" /> Logout</Link></li>);
       registerButton = '';
       loginButton = '';
@@ -69,6 +71,7 @@ export default class Nav extends React.Component {
               {loginButton}
               {profileButton}
               {exerciseButton}
+              {deviceButton}
               {admin}
               {logoutButton}
               {displayedUserName}

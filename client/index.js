@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Profile from './components/Profile';
 import Exercise from './components/Exercise';
+import Device from './components/Device';
 import Admin from './components/Admin';
 
 
@@ -28,6 +29,7 @@ render(
       <Route path="logout" component={Logout} />
       <Route path="profile" component={Profile} />
       <Route path="exercise" component={Exercise} />
+      <Route path="device" component={Device} />
       <Route path="admin" component={Admin} />
     </Route>
   </Router>
